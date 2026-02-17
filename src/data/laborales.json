@@ -1,0 +1,322 @@
+[
+    {
+        "id": "A",
+        "letter": "a",
+        "title": "ENFERMEDAD GRAVE / HOSPITALIZACIÓN / INTERVENCIÓN",
+        "tenSeconds": {
+            "cubre": "Hospitalización, enfermedad grave o intervención sin ingreso con reposo domiciliario.",
+            "corresponde": "5 días hábiles (1º grado/conviviente) / 4 días hábiles (2º grado).",
+            "justificante": "Certificado centro sanitario con fechas o días de reposo prescritos."
+        },
+        "duracion": "5 días hábiles para cónyuge, pareja de hecho, 1er grado o conviviente con cuidado efectivo. 4 días hábiles para 2º grado.",
+        "computo": "La hospitalización o intervención debe producirse dentro de la jornada laboral para computar el día. El permiso puede disfrutarse en DÍAS ALTERNOS (salteados) mientras dure el hecho causante.",
+        "quien": "Cónyuge, pareja de hecho acreditada, familiares hasta 2º grado y convivientes acreditados que requieran cuidado efectivo.",
+        "condiciones": "La intervención 'sin ingreso' requiere reposo domiciliario prescrito. Si el médico no pone reposo, solo cubre el día de la intervención.",
+        "documentacion": "Justificante con fechas de ingreso/alta o indicación de los días de reposo necesarios.",
+        "solicitar": "72h de antelación si es programado.",
+        "faq": [
+            {
+                "q": "¿Puedo coger los días salteados?",
+                "a": "Sí, siempre que persista la hospitalización o el reposo domiciliario prescrito por el médico al alta."
+            },
+            {
+                "q": "¿Si operan a mi madre un sábado puedo pedir el lunes?",
+                "a": "Solo si continúa ingresada el lunes o tiene prescrito reposo que cubra ese día lunes."
+            }
+        ]
+    },
+    {
+        "id": "B",
+        "letter": "a",
+        "title": "FALLECIMIENTO",
+        "tenSeconds": {
+            "cubre": "Fallecimiento de familiares hasta 2º grado.",
+            "corresponde": "1er grado: 3-5 días hábiles / 2º grado: 2-4 días hábiles.",
+            "justificante": "Certificado de defunción + acreditación de localidad."
+        },
+        "duracion": "1er grado/Cónyuge: 3 días (misma localidad) / 5 días (distinta). 2º grado: 2 días (misma) / 4 días (distinta).",
+        "computo": "Días hábiles desde el suceso. 'Misma localidad' se entiende como el municipio del centro de trabajo del empleado.",
+        "quien": "Cónyuge, pareja de hecho y familiares hasta 2º grado (consanguinidad/afinidad).",
+        "condiciones": "Se amplían los días si el suceso/sepelio requiere desplazamiento a distinta localidad de la del centro de trabajo.",
+        "documentacion": "Certificado del registro civil o justificante funerario.",
+        "solicitar": "Inmediata por urgencia.",
+        "faq": [
+            {
+                "q": "¿Qué se considera distinta localidad?",
+                "a": "Cualquier municipio diferente al de tu centro de trabajo (Villalbilla u otro según tu destino)."
+            }
+        ]
+    },
+    {
+        "id": "C",
+        "letter": "b",
+        "title": "TRASLADO DE DOMICILIO",
+        "tenSeconds": {
+            "cubre": "Mudanza de la residencia habitual.",
+            "corresponde": "1 día.",
+            "justificante": "Documento que acredite el traslado efectivo."
+        },
+        "duracion": "1 día.",
+        "computo": "Día efectivo de la mudanza.",
+        "quien": "El trabajador/a.",
+        "condiciones": "Para residencia habitual comprobable del trabajador.",
+        "documentacion": "Contrato, certificado o cualquier justificante válido de mudanza.",
+        "solicitar": "72h de antelación.",
+        "faq": [
+            {
+                "q": "¿Puedo pedirlo para ayudar en la mudanza de mi hijo?",
+                "a": "No. Este permiso es para el traslado de la residencia habitual del propio trabajador."
+            }
+        ]
+    },
+    {
+        "id": "D",
+        "letter": "d",
+        "title": "EXÁMENES FINALES Y PRUEBAS OFICIALES",
+        "tenSeconds": {
+            "cubre": "Asistencia a exámenes finales y pruebas definitivas de aptitud.",
+            "corresponde": "Durante los días de su celebración.",
+            "justificante": "Convocatoria + Certificado de asistencia."
+        },
+        "duracion": "Tiempo de celebración del examen.",
+        "computo": "REGLA NOCTURNA: Derecho a no trabajar la noche previa si el examen es antes de las 15:00h del día siguiente.",
+        "quien": "Trabajadores matriculados oficialmente.",
+        "condiciones": "Cubre exámenes finales, pruebas de acceso (EBAU/Oposiciones), exámenes de conducir, etc.",
+        "documentacion": "Certificado de examen con horas de entrada y salida.",
+        "solicitar": "72h de antelación.",
+        "faq": [
+            {
+                "q": "¿Incluye el carné de conducir?",
+                "a": "Sí, pero solo para los días de exámenes teóricos u oficiales de destreza y circulación. No para las clases prácticas."
+            }
+        ]
+    },
+    {
+        "id": "E",
+        "letter": "e",
+        "title": "CONSULTAS Y PRUEBAS MÉDICAS (SPS Y PRIVADA)",
+        "tenSeconds": {
+            "cubre": "Asistencia a consulta médica y realización de pruebas o tratamientos.",
+            "corresponde": "Tiempo indispensable (incluye desplazamientos y recuperación).",
+            "justificante": "Cita con hora de asignación y de finalización."
+        },
+        "duracion": "Tiempo indispensable (ida, prueba y vuelta).",
+        "computo": "Desde que se sale del puesto de trabajo hasta el retorno.",
+        "quien": "El trabajador/a.",
+        "condiciones": "SPS: Retribuido. PRIVADA: Solo si no puede ser fuera de jornada o por prueba de carácter urgente. Analíticas no requieren acreditar imposibilidad de horario fuera de jornada.",
+        "documentacion": "Volante médico sellado con horas.",
+        "solicitar": "72h de antelación.",
+        "faq": [
+            {
+                "q": "¿Puedo ir a un dentista privado?",
+                "a": "Sí, si justificas que la atención era necesaria y no podías ir en otro horario por la urgencia o disponibilidad de cita."
+            }
+        ]
+    },
+    {
+        "id": "F",
+        "letter": "f",
+        "title": "PRENATALES / PREPARACIÓN PARTO / ADOPCIÓN",
+        "tenSeconds": {
+            "cubre": "Exámenes prenatales, técnicas de preparación al parto y trámites de adopción.",
+            "corresponde": "Tiempo indispensable.",
+            "justificante": "Justificante del centro o servicios sociales."
+        },
+        "duracion": "Tiempo indispensable.",
+        "computo": "Dentro de la jornada.",
+        "quien": "Personal gestante o en proceso de adopción.",
+        "condiciones": "Solo para el tiempo de las citas que coincida con el trabajo.",
+        "documentacion": "Justificante firmado por el centro médico o asistente social.",
+        "solicitar": "72h de antelación.",
+        "faq": [
+            {
+                "q": "¿Qué pasa si las clases son por la tarde y trabajo por la mañana?",
+                "a": "No habría permiso retribuido al no coincidir con la jornada laboral."
+            }
+        ]
+    },
+    {
+        "id": "G",
+        "letter": "g",
+        "title": "LACTANCIA (MENOR DE 12 MESES)",
+        "tenSeconds": {
+            "cubre": "Cuidado del hijo/a menor de doce meses.",
+            "corresponde": "1h diaria (divisible), reducción jornada o acumulación días completos.",
+            "justificante": "Acreditación nacimiento."
+        },
+        "duracion": "1 hora diaria. Se puede ampliar a reducción de jornada (1 hora adicional con reducción de sueldo).",
+        "computo": "Hasta los 12 meses del menor. Si se acumula, debe ser a continuación del permiso de nacimiento/permiso de maternidad.",
+        "quien": "Un solo progenitor por hijo/a.",
+        "condiciones": "La acumulación son días hábiles efectivos de trabajo (aprox. 15-20 días).",
+        "documentacion": "Solicitud con 15 días de preaviso.",
+        "solicitar": "Antes de terminar el permiso por nacimiento.",
+        "faq": [
+            {
+                "q": "¿Puedo disfrutarlo si mi pareja no trabaja?",
+                "a": "Sí, es un derecho individual del trabajador, independientemente de la situación laboral del otro progenitor."
+            }
+        ]
+    },
+    {
+        "id": "H",
+        "letter": "h",
+        "title": "PREMATUROS / HOSPITALIZACIÓN POST-PARTO",
+        "tenSeconds": {
+            "cubre": "Ausencia por nacimiento prematuro u hospitalización tras el parto.",
+            "corresponde": "2 horas diarias retribuidas + 2 horas opcionales (reducción sueldo).",
+            "justificante": "Certificado hospitalización."
+        },
+        "duracion": "2 horas diarias retribuidas.",
+        "computo": "Máximo por el tiempo que dure la hospitalización.",
+        "quien": "Progenitores.",
+        "condiciones": "Se suma al tiempo de lactancia.",
+        "documentacion": "Certificado médico de hospitalización del neonato.",
+        "solicitar": "Tan pronto como se produzca el suceso.",
+        "faq": [
+            {
+                "q": "¿Es para siempre?",
+                "a": "Solo mientras el recién nacido esté ingresado en el hospital."
+            }
+        ]
+    },
+    {
+        "id": "I",
+        "letter": "i",
+        "title": "GUARDA LEGAL / CUIDADO DIRECTO",
+        "tenSeconds": {
+            "cubre": "Reducción de jornada por cuidado de familiares o dependientes.",
+            "corresponde": "Reducción de jornada con disminución proporcional de retribuciones.",
+            "justificante": "Acreditación parentesco/dependencia."
+        },
+        "duracion": "Entre 1/8 y 1/2 de la jornada diaria.",
+        "computo": "Por un periodo estable (no por horas sueltas o días aislados).",
+        "quien": "Cuidado de menores de 12 años, personas con discapacidad o familiares 2º grado dependientes.",
+        "condiciones": "La persona cuidada no debe trabajar ni ganar más del SMI.",
+        "documentacion": "Libro de familia o certificados de discapacidad.",
+        "solicitar": "15 días de antelación.",
+        "faq": [
+            {
+                "q": "¿Me reduce también las pagas extras?",
+                "a": "Sí, la reducción de sueldo es proporcional en todos los conceptos de la nómina."
+            }
+        ]
+    },
+    {
+        "id": "J",
+        "letter": "j",
+        "title": "CUIDADO FAMILIAR 1º GRADO (ENFERMEDAD MUY GRAVE)",
+        "tenSeconds": {
+            "cubre": "Atención por enfermedad muy grave de familiar directo.",
+            "corresponde": "Reducción hasta 50% RETRIBUIDA (máx. 1 mes).",
+            "justificante": "Informe médico + Comisión Paritaria."
+        },
+        "duracion": "Reducción de media jornada cobrando el sueldo completo.",
+        "computo": "Hasta un mes. Excepcional.",
+        "quien": "Familia de 1er grado (padres, hijos) y cónyuge/pareja.",
+        "condiciones": "Para situaciones de 'Enfermedad Muy Grave'. Validado técnicamente por la Comisión Paritaria.",
+        "documentacion": "Informe médico específico sobre la gravedad y necesidad de cuidados constantes.",
+        "solicitar": "Inmediata tras el diagnóstico.",
+        "faq": [
+            {
+                "q": "¿Qué pasa si mis hermanos también quieren pedirlo?",
+                "a": "El mes se reparte entre todos los que lo soliciten por el mismo familiar; no es un mes para cada uno."
+            }
+        ]
+    },
+    {
+        "id": "K",
+        "letter": "k",
+        "title": "DEBER INEXCUSABLE / CONCILIACIÓN",
+        "tenSeconds": {
+            "cubre": "Citaciones judiciales, deberes públicos y acompañamientos médicos específicos.",
+            "corresponde": "Tiempo indispensable.",
+            "justificante": "Citación o justificante de acompañamiento."
+        },
+        "duracion": "Tiempo indispensable (incluyendo el tiempo de ida y vuelta).",
+        "computo": "Durante la jornada laboral.",
+        "quien": "El trabajador titular.",
+        "condiciones": "Inexcusable: Citaciones de juzgado, renovación de documentos oficiales (DNI) si es imposible fuera de horario, elecciones. CONCILIACIÓN: Solo hijos menores a URGENCIAS, especialistas o adultos con sedación. La cita con el médico de familia del niño NO es permiso K, es permiso N.",
+        "documentacion": "Citación oficial sellada o volante médico con hora de inicio y fin.",
+        "solicitar": "72h de antelación.",
+        "faq": [
+            {
+                "q": "¿Puedo acompañar a mi pareja al oculista?",
+                "a": "Normalmente no por el apartado K (a menos que sea por sedación/intervención). Usa tu 'bolsa de 28h'."
+            },
+            {
+                "q": "¿Counta como deber ir a votar?",
+                "a": "Sí, por el tiempo necesario si estás trabajando durante la jornada electoral."
+            }
+        ]
+    },
+    {
+        "id": "L",
+        "letter": "l",
+        "title": "ASUNTOS PARTICULARES",
+        "tenSeconds": {
+            "cubre": "Días de libre disposición.",
+            "corresponde": "6 días al año.",
+            "justificante": "No requiere justificación de causa."
+        },
+        "duracion": "6 días anuales retribuidos.",
+        "computo": "Días naturales completos.",
+        "quien": "El trabajador/a.",
+        "condiciones": "Sujeto a las necesidades del servicio y a los plazos de solicitud generales (Art. 13).",
+        "documentacion": "Petición a RR.HH.",
+        "solicitar": "72h de antelación.",
+        "faq": [
+            {
+                "q": "¿Si no los gasto antes de final de año?",
+                "a": "Normalmente se permite su disfrute hasta el 31 de enero del año siguiente."
+            }
+        ]
+    },
+    {
+        "id": "M",
+        "letter": "m",
+        "title": "MATRIMONIO / PAREJA DE HECHO",
+        "tenSeconds": {
+            "cubre": "Matrimonio o registro oficial de pareja de hecho.",
+            "corresponde": "15 días naturales.",
+            "justificante": "Inscripción registro o documento público."
+        },
+        "duracion": "15 días naturales.",
+        "computo": "Días seguidos (incluyendo festivos) desde el día del matrimonio/firma.",
+        "quien": "El trabajador que se casa o registra como pareja de hecho.",
+        "condiciones": "Solo por formalización oficial. Debe justificarse con acta de registro o libro de familia.",
+        "documentacion": "Certificación del Registro Civil.",
+        "solicitar": "15 días de antelación.",
+        "faq": [
+            {
+                "q": "¿Si me caso un domingo puedo empezar a contar el lunes?",
+                "a": "No, el permiso por norma general se cuenta desde la fecha oficial del matrimonio."
+            }
+        ]
+    },
+    {
+        "id": "N",
+        "letter": "n",
+        "title": "CRÉDITO SALUD/CONCILIACIÓN: 28 HORAS",
+        "tenSeconds": {
+            "cubre": "Bolsa para cuidados en domicilio y reuniones escolares.",
+            "corresponde": "28h/año (sublímite 14h para acompañamientos y colegio).",
+            "justificante": "Informe médico o convocatoria centro escolar."
+        },
+        "duracion": "Bolsa de 28 horas anuales retribuidas.",
+        "computo": "Por el tiempo exacto de ausencia (horas y minutos).",
+        "quien": "Cuidado de hijos, cónyuge, padres o familiares directos convivientes.",
+        "condiciones": "Este permiso es tu BOLSA DE COMODÍN. Úsalo para acompañar a tu hijo al pediatra rutinario, reuniones con profesores o si tu madre se pone mala de gripe en casa. Sublímite de 14h para tutorías y acompañamiento SPS rutinario.",
+        "documentacion": "Justificante médico de parentesco/asistencia o volante de reunión escolar.",
+        "solicitar": "72h (programas) o de inmediato (urgencias leves en domicilio).",
+        "faq": [
+            {
+                "q": "¿Qué pasa si se me acaban las 28 horas?",
+                "a": "Podrás seguir pidiendo permiso por estas causas, pero deberás recuperar el tiempo o se descontará del sueldo."
+            },
+            {
+                "q": "¿Diferencia con el aparado K (Deber Inexcusable)?",
+                "a": "El K es para lo 'GRAVE O URGENTE' (especialistas, urgencias médicas). El N es para lo 'RUTINARIO O DE CUIDADO EN CASA' (revisión dentista, gripe en domicilio, tutoría del cole)."
+            }
+        ]
+    }
+]

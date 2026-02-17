@@ -1,0 +1,453 @@
+import React, { useState } from 'react';
+import { 
+  Users, Heart, Baby, Clock, FileText, AlertCircle, 
+  ShieldCheck, Stethoscope, Scale, Briefcase, Home, GraduationCap, 
+  ArrowRight, ArrowLeft, Activity, MessageSquare, BookOpen, MapPin
+} from 'lucide-react';
+
+const App = () => {
+  const [view, setView] = useState('dashboard');
+  const [selectedPermit, setSelectedPermit] = useState(null);
+
+  const permits = [
+    {
+      id: 'A',
+      letter: 'a',
+      title: 'ENFERMEDAD GRAVE / HOSPITALIZACIÓN / INTERVENCIÓN',
+      tenSeconds: {
+        cubre: 'Hospitalización, enfermedad grave o intervención sin ingreso con reposo domiciliario.',
+        corresponde: '5 días hábiles (1º grado/conviviente) / 4 días hábiles (2º grado).',
+        justificante: 'Certificado centro sanitario con fechas o días de reposo prescritos.'
+      },
+      duracion: '5 días hábiles para cónyuge, pareja de hecho, 1er grado o conviviente con cuidado efectivo. 4 días hábiles para 2º grado.',
+      computo: 'La hospitalización o intervención debe producirse dentro de la jornada laboral para computar el día. El permiso puede disfrutarse en días alternos mientras dure la hospitalización.',
+      quien: 'Cónyuge, pareja de hecho acreditada (o relación análoga), familiares hasta 2º grado y cualquier persona que conviva y requiera cuidado efectivo.',
+      condiciones: 'Incluye reposo domiciliario post-hospitalización si es prescrito por el médico al alta. "Enfermedad grave" es la informada así por facultativo.',
+      documentacion: 'Justificante del centro sanitario con la fecha del último día o, en caso de reposo, indicación expresa del facultativo sobre el número de días.',
+      solicitar: 'Mínimo 72h de antelación. En casos de urgencia, la comunicación puede ser posterior.',
+      faq: [
+        { q: '¿Qué pasa si la operación es fuera de mi horario?', a: 'Para que se considere día de permiso, el hecho causante debe producirse dentro de tu jornada laboral.' },
+        { q: '¿Cómo justifico el reposo?', a: 'Debe ser prescrito expresamente por el médico que otorga el alta hospitalaria.' },
+        { q: '¿A quién se considera pareja de hecho?', a: 'Persona con certificado de convivencia y alta en la declaración de situación familiar ante el Ayuntamiento.' }
+      ]
+    },
+    {
+      id: 'B',
+      letter: 'a',
+      title: 'FALLECIMIENTO',
+      tenSeconds: {
+        cubre: 'Fallecimiento de familiares hasta 2º grado.',
+        corresponde: '1er grado: 3-5 días hábiles / 2º grado: 2-4 días hábiles.',
+        justificante: 'Certificado de defunción + acreditación de localidad.'
+      },
+      duracion: '1er grado/Cónyuge: 3 días (misma localidad) / 5 días (distinta). 2º grado: 2 días (misma) / 4 días (distinta).',
+      computo: 'Días hábiles. Cuenta desde el suceso (fallecimiento y/o sepelio).',
+      quien: 'Cónyuge, pareja de hecho y familiares hasta 2º grado por consanguinidad o afinidad.',
+      condiciones: 'La localidad se refiere a donde se produce el suceso/sepelio respecto al centro de trabajo.',
+      documentacion: 'Certificado de defunción o justificante de la empresa de servicios funerarios.',
+      solicitar: 'Urgencia: comunicación inmediata. 72h si es programado (sepelio posterior).',
+      faq: [
+        { q: '¿Los días son naturales o hábiles?', a: 'Son días hábiles según el texto del acuerdo.' },
+        { q: '¿Qué grado es un cuñado?', a: '2º grado de afinidad (hermano/a del cónyuge).' }
+      ]
+    },
+    {
+      id: 'C',
+      letter: 'b',
+      title: 'TRASLADO DE DOMICILIO',
+      tenSeconds: {
+        cubre: 'Mudanza de la residencia habitual.',
+        corresponde: '1 día.',
+        justificante: 'Documento que acredite el traslado efectivo.'
+      },
+      duracion: '1 día.',
+      computo: 'El día del traslado.',
+      quien: 'El trabajador/a titular.',
+      condiciones: 'Sin cambio de localidad.',
+      documentacion: 'Cualquier justificante adecuado (contrato, factura mudanza, alta suministros).',
+      solicitar: '72h de antelación.',
+      faq: [
+        { q: '¿Y si me mudo a otro pueblo?', a: 'Este permiso específico es "sin cambio de localidad". Para traslados mayores, consulte con RR.HH.' }
+      ]
+    },
+    {
+      id: 'D',
+      letter: 'd',
+      title: 'EXÁMENES FINALES Y PRUEBAS OFICIALES',
+      tenSeconds: {
+        cubre: 'Asistencia a exámenes finales y pruebas definitivas de aptitud.',
+        corresponde: 'Durante los días de su celebración.',
+        justificante: 'Convocatoria + Certificado de asistencia.'
+      },
+      duracion: 'Días de celebración.',
+      computo: 'REGLA NOCTURNA: Si trabajas de noche, tienes permiso desde las 23:00h del día anterior si el examen empieza antes de las 15:00h del día siguiente.',
+      quien: 'El trabajador/a matriculado.',
+      condiciones: 'Deben ser exámenes finales o pruebas oficiales definitivas.',
+      documentacion: 'Certificado del centro educativo con fecha y hora de la prueba.',
+      solicitar: '72h de antelación.',
+      faq: [
+        { q: '¿Cubre el tiempo de estudio?', a: 'No, el permiso es solo para la celebración del examen.' },
+        { q: '¿Si el examen es a las 10 de la mañana y trabajo la noche antes?', a: 'Tienes derecho a faltar desde las 23:00h de la noche anterior.' }
+      ]
+    },
+    {
+      id: 'E',
+      letter: 'e',
+      title: 'CONSULTAS Y PRUEBAS MÉDICAS (SPS Y PRIVADA)',
+      tenSeconds: {
+        cubre: 'Asistencia a consulta médica y realización de pruebas o tratamientos.',
+        corresponde: 'Tiempo indispensable (incluye desplazamientos y recuperación).',
+        justificante: 'Cita con hora de asignación y de finalización.'
+      },
+      duracion: 'Tiempo indispensable.',
+      computo: 'Incluye el tiempo necesario para preparación, recuperación y desplazamientos (domicilio/trabajo ↔ consulta).',
+      quien: 'El trabajador/a.',
+      condiciones: 'SPS (Público): Siempre retribuido. PRIVADA: Solo si se acredita que no ha podido ser fuera de jornada, salvo pruebas invasivas (analíticas ayunas, colonoscopias, etc.) que no requieren dicha acreditación.',
+      documentacion: 'Debe constar: hora de cita asignada y hora de finalización del acto médico.',
+      solicitar: '72h de antelación.',
+      faq: [
+        { q: '¿Puedo ir a un médico privado en horario de trabajo?', a: 'Sí, si informas previamente y justificas que la cita pública se demoraba en exceso para tu recuperación.' },
+        { q: '¿Tengo que recuperar las horas?', a: 'Si no concurren las circunstancias de permiso retribuido, el tiempo deberá recuperarse.' }
+      ]
+    },
+    {
+      id: 'F',
+      letter: 'f',
+      title: 'PRENATALES / PREPARACIÓN PARTO / ADOPCIÓN',
+      tenSeconds: {
+        cubre: 'Exámenes prenatales, técnicas de preparación al parto y trámites de adopción.',
+        corresponde: 'Tiempo indispensable.',
+        justificante: 'Justificante del centro o servicios sociales.'
+      },
+      duracion: 'Tiempo indispensable.',
+      computo: 'Dentro de la jornada de trabajo.',
+      quien: 'Trabajadoras embarazadas (incluye trans gestantes), adoptantes o acogedores.',
+      condiciones: 'Para adopción/acogimiento: incluye sesiones de información, preparación e informes psicológicos/sociales previos.',
+      documentacion: 'Citación o justificante de asistencia.',
+      solicitar: '72h de antelación.',
+      faq: [
+        { q: '¿Incluye a los hombres en preparación al parto?', a: 'El artículo especifica "trabajadoras embarazadas/trans gestantes". Para acompañamiento, ver apartado N (crédito 28h).' }
+      ]
+    },
+    {
+      id: 'G',
+      letter: 'g',
+      title: 'LACTANCIA (MENOR DE 12 MESES)',
+      tenSeconds: {
+        cubre: 'Cuidado del hijo/a menor de doce meses.',
+        corresponde: '1h diaria (divisible), reducción jornada o acumulación días completos.',
+        justificante: 'Acreditación nacimiento.'
+      },
+      duracion: '1 hora de ausencia diaria (divisible en dos fracciones). Alternativa: reducción de media hora al inicio y fin, o 1 hora al inicio o al fin.',
+      computo: 'Hasta que el menor cumpla 12 meses. ACUMULACIÓN: Se puede sustituir por jornadas completas tras el permiso de nacimiento.',
+      quien: 'Derecho individual del trabajador/a (no transferible).',
+      condiciones: 'Se incrementa proporcionalmente en casos de parto, adopción o acogimiento múltiple.',
+      documentacion: 'Solicitud indicando la modalidad elegida.',
+      solicitar: 'Antes de finalizar el permiso por nacimiento.',
+      faq: [
+        { q: '¿Puedo acumularlo si ya estoy trabajando?', a: 'La modalidad de acumulación se debe disfrutar inmediatamente después del permiso de nacimiento.' }
+      ]
+    },
+    {
+      id: 'H',
+      letter: 'h',
+      title: 'PREMATUROS / HOSPITALIZACIÓN POST-PARTO',
+      tenSeconds: {
+        cubre: 'Ausencia por nacimiento prematuro u hospitalización tras el parto.',
+        corresponde: '2 horas diarias retribuidas + 2 horas opcionales (reducción sueldo).',
+        justificante: 'Certificado hospitalización.'
+      },
+      duracion: 'Hasta 2 horas diarias percibiendo retribuciones íntegras.',
+      computo: 'Mientras dure la hospitalización.',
+      quien: 'Progenitores.',
+      condiciones: 'Derecho adicional a reducir la jornada hasta otras 2 horas con disminución proporcional de sueldo.',
+      documentacion: 'Acreditación hospitalaria del neonato.',
+      solicitar: 'Inmediata tras el suceso.',
+      faq: [
+        { q: '¿Es compatible con la hora de lactancia?', a: 'Sí, son permisos por causas distintas.' }
+      ]
+    },
+    {
+      id: 'I',
+      letter: 'i',
+      title: 'GUARDA LEGAL / CUIDADO DIRECTO',
+      tenSeconds: {
+        cubre: 'Reducción de jornada por cuidado de familiares o dependientes.',
+        corresponde: 'Reducción de jornada con disminución proporcional de retribuciones.',
+        justificante: 'Acreditación parentesco/dependencia.'
+      },
+      duracion: 'Según la reducción solicitada.',
+      computo: 'Diario.',
+      quien: 'Cuidado de menor de 12 años, mayores con especial dedicación, personas con discapacidad o familiares hasta 2º grado que no trabajen.',
+      condiciones: 'La persona cuidada no debe desempeñar actividad retribuida.',
+      documentacion: 'Libro de familia, certificados de discapacidad o dependencia.',
+      solicitar: '72h de antelación.',
+      faq: [
+        { q: '¿Puedo elegir el horario de reducción?', a: 'Se determina dentro de la jornada ordinaria según necesidades del servicio y conciliación.' }
+      ]
+    },
+    {
+      id: 'J',
+      letter: 'j',
+      title: 'CUIDADO FAMILIAR 1º GRADO (ENFERMEDAD MUY GRAVE)',
+      tenSeconds: {
+        cubre: 'Atención por enfermedad muy grave de familiar directo.',
+        corresponde: 'Reducción hasta 50% RETRIBUIDA (máx. 1 mes).',
+        justificante: 'Informe médico + Comisión Paritaria.'
+      },
+      duracion: 'Hasta el 50% de la jornada, con carácter retribuido, por máximo de un mes.',
+      computo: 'Prorrateable si hay más de un titular con derecho por el mismo hecho.',
+      quien: 'Familiar de primer grado.',
+      condiciones: 'La gravedad debe ser determinada por la Comisión Paritaria.',
+      documentacion: 'Informes médicos de alta gravedad.',
+      solicitar: '72h de antelación.',
+      faq: [
+        { q: '¿Se cobra el 100%?', a: 'Sí, es una reducción retribuida.' }
+      ]
+    },
+    {
+      id: 'K',
+      letter: 'k',
+      title: 'DEBER INEXCUSABLE / CONCILIACIÓN',
+      tenSeconds: {
+        cubre: 'Citaciones judiciales, deberes públicos y acompañamientos médicos específicos.',
+        corresponde: 'Tiempo indispensable.',
+        justificante: 'Citación o justificante de acompañamiento.'
+      },
+      duracion: 'Tiempo indispensable.',
+      computo: 'Durante la jornada laboral.',
+      quien: 'El trabajador/a.',
+      condiciones: 'PÚBLICO: Juzgados, Concejales, Elecciones, AEAT. CONCILIACIÓN: Acompañar hijos menores a Urgencias (debe poner "Urgencias"), especialistas o pruebas invasivas. Adultos 1er grado: Solo pruebas invasivas con sedación (TAC, colonoscopias, oncología).',
+      documentacion: 'Citación oficial o justificante médico con hora y tipo de acto médico.',
+      solicitar: '72h de antelación salvo urgencia.',
+      faq: [
+        { q: '¿Puedo acompañar a mi padre al médico de cabecera?', a: 'No por este apartado, salvo que sea una prueba invasiva/sedación. Use el apartado N (crédito 28h).' },
+        { q: '¿Me cubre el DNI?', a: 'Se considera deber público si es imposible hacerlo fuera de jornada.' }
+      ]
+    },
+    {
+      id: 'L',
+      letter: 'l',
+      title: 'ASUNTOS PARTICULARES',
+      tenSeconds: {
+        cubre: 'Días de libre disposición.',
+        corresponde: '6 días al año.',
+        justificante: 'No requiere justificación de causa.'
+      },
+      duracion: '6 días anuales.',
+      computo: 'Días completos.',
+      quien: 'El trabajador/a.',
+      condiciones: 'Sujeto a necesidades del servicio (remisión al Art. 13 para gestión y plazos).',
+      documentacion: 'Solicitud formal.',
+      solicitar: '72h de antelación.',
+      faq: [
+        { q: '¿Puedo unirlos a vacaciones?', a: 'Sí, máximo 5 días hábiles acumulables según Art. 13.' }
+      ]
+    },
+    {
+      id: 'M',
+      letter: 'm',
+      title: 'MATRIMONIO / PAREJA DE HECHO',
+      tenSeconds: {
+        cubre: 'Matrimonio o registro oficial de pareja de hecho.',
+        corresponde: '15 días naturales.',
+        justificante: 'Inscripción registro o documento público.'
+      },
+      duracion: '15 días naturales.',
+      computo: 'Desde el hecho causante.',
+      quien: 'Los contrayentes.',
+      condiciones: 'Debe formalizarse por documento público o registro de pareja de hecho.',
+      documentacion: 'Certificación oficial del registro o copia del documento público.',
+      solicitar: '72h de antelación.',
+      faq: [
+        { q: '¿Si me caso un sábado, cuándo empieza?', a: 'Empieza a contar el mismo día de la celebración.' }
+      ]
+    },
+    {
+      id: 'N',
+      letter: 'n',
+      title: 'CRÉDITO SALUD/CONCILIACIÓN: 28 HORAS',
+      tenSeconds: {
+        cubre: 'Bolsa para cuidados en domicilio y reuniones escolares.',
+        corresponde: '28h/año (sublímite 14h para acompañamientos y colegio).',
+        justificante: 'Informe médico o convocatoria centro escolar.'
+      },
+      duracion: 'Hasta 28 horas al año retribuidas.',
+      computo: 'Bolsa horaria. Una vez agotada, el permiso es NO retribuido (recuperable).',
+      quien: 'Cuidado de familiares 1º grado, cónyuge/pareja y 2º grado convivientes.',
+      condiciones: 'REPOSO: Si se usa tras agotar el permiso A (hospitalización), debe acreditarse necesidad de reposo domiciliario. SUBLÍMITE 14H: Para acompañamiento SPS de menores, dependientes o >65 años, y para reuniones académicas/tutorías.',
+      documentacion: 'Informe médico que indique necesidad de cuidado/reposo o justificante de tutoría/orientación.',
+      solicitar: '72h de antelación salvo urgencia médica.',
+      faq: [
+        { q: '¿Qué familiares entran?', a: '1er grado, cónyuge y 2º grado siempre que convivan contigo.' },
+        { q: '¿Puedo usar las 28h para una tutoría?', a: 'Solo puedes usar hasta 14 de esas 28 horas para temas escolares o acompañamientos.' }
+      ]
+    }
+  ];
+
+  const selectPermit = (p) => {
+    setSelectedPermit(p);
+    setView('detail');
+    window.scrollTo(0, 0);
+  };
+
+  return (
+    <div className="min-h-screen bg-[#050b18] text-slate-300 font-sans selection:bg-red-500/30">
+      
+      {/* HEADER ESTILO IMAGEN LABORALES */}
+      {view === 'dashboard' && (
+        <header className="max-w-7xl mx-auto px-8 pt-12 pb-8">
+          <div className="flex items-start gap-4 mb-4">
+            <div className="w-10 h-10 bg-red-600 rounded flex items-center justify-center shrink-0">
+               <ShieldCheck className="text-white" size={24} />
+            </div>
+            <div>
+              <p className="text-[10px] font-bold text-red-500 tracking-[0.2em] uppercase mb-1">Documentación Oficial</p>
+              <h1 className="text-4xl font-bold text-white tracking-tight leading-none">
+                Convenio Colectivo <span className="text-red-500">Laborales</span>
+              </h1>
+            </div>
+          </div>
+          <p className="text-slate-500 text-sm max-w-2xl font-medium">
+            Marco regulador de las relaciones laborales del personal laboral del Ayuntamiento de Villalbilla.
+            <br/><span className="text-red-500/80 mt-2 block font-bold uppercase text-[10px]">Artículo 11: Permisos Retribuidos</span>
+          </p>
+        </header>
+      )}
+
+      {/* VISTA DASHBOARD (GRID ESTILO IMAGEN ROJO) */}
+      {view === 'dashboard' && (
+        <main className="max-w-7xl mx-auto px-8 pb-20 animate-in fade-in duration-700">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {permits.map((p) => (
+              <div 
+                key={p.id}
+                onClick={() => selectPermit(p)}
+                className="group relative bg-[#0d1526] border border-slate-800 p-8 rounded-lg cursor-pointer transition-all hover:bg-[#1a0f12] hover:border-red-900 shadow-xl"
+              >
+                <div className="w-10 h-10 border border-red-500/30 rounded flex items-center justify-center mb-6 text-red-500 group-hover:bg-red-600 group-hover:text-white transition-all">
+                  <span className="text-lg font-black uppercase">{p.letter}</span>
+                </div>
+                
+                <h3 className="text-lg font-bold text-white leading-snug mb-2 uppercase tracking-tight h-14 line-clamp-2">
+                  {p.title}
+                </h3>
+                
+                <button className="flex items-center gap-2 text-[10px] font-bold text-red-500 tracking-widest uppercase mt-4 group-hover:gap-4 transition-all">
+                  Ver Detalle <ArrowRight size={14} />
+                </button>
+              </div>
+            ))}
+          </div>
+        </main>
+      )}
+
+      {/* VISTA DETALLE (ESTILO LABORALES) */}
+      {view === 'detail' && selectedPermit && (
+        <main className="max-w-4xl mx-auto px-6 py-12 animate-in fade-in zoom-in-95 duration-400">
+          
+          <button 
+            onClick={() => setView('dashboard')}
+            className="flex items-center gap-2 text-xs font-bold text-red-500 uppercase tracking-[0.2em] mb-12 hover:text-white transition-colors"
+          >
+            <ArrowLeft size={16} /> Volver a Permisos Retribuidos
+          </button>
+
+          <div className="space-y-10">
+            <header className="border-l-4 border-red-600 pl-6">
+              <p className="text-xs font-black text-red-600 uppercase tracking-[0.3em] mb-2">Apartado {selectedPermit.letter}) del Art. 11</p>
+              <h2 className="text-4xl font-black text-white leading-tight uppercase tracking-tighter">{selectedPermit.title}</h2>
+            </header>
+
+            {/* BLOQUE 10 SEGUNDOS (ROJO) */}
+            <section className="bg-[#1a0f12]/40 border border-red-900/30 p-8 rounded-lg">
+              <h3 className="text-[10px] font-black text-red-400 uppercase tracking-widest mb-6 flex items-center gap-2">
+                <Clock size={16} /> Resumen en 10 segundos
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                  <p className="text-[10px] font-bold text-slate-500 uppercase mb-2">Qué cubre</p>
+                  <p className="text-sm text-white font-medium">{selectedPermit.tenSeconds.cubre}</p>
+                </div>
+                <div>
+                  <p className="text-[10px] font-bold text-slate-500 uppercase mb-2">Corresponde</p>
+                  <p className="text-sm text-white font-bold text-red-400">{selectedPermit.tenSeconds.corresponde}</p>
+                </div>
+                <div>
+                  <p className="text-[10px] font-bold text-slate-500 uppercase mb-2">Justificante</p>
+                  <p className="text-sm text-white font-medium italic">{selectedPermit.tenSeconds.justificante}</p>
+                </div>
+              </div>
+            </section>
+
+            {/* CUERPO DETALLADO */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="space-y-8">
+                <div>
+                  <h4 className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-3">Duración y Cómputo</h4>
+                  <p className="text-sm text-white font-bold mb-1">{selectedPermit.duracion}</p>
+                  <p className="text-xs text-slate-400 leading-relaxed italic">{selectedPermit.computo}</p>
+                </div>
+                <div>
+                  <h4 className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-3">Quién da derecho</h4>
+                  <p className="text-sm text-slate-300 leading-relaxed">{selectedPermit.quien}</p>
+                </div>
+              </div>
+
+              <div className="space-y-8">
+                <div>
+                  <h4 className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-3">Condiciones Clave</h4>
+                  <p className="text-sm text-slate-300 leading-relaxed">{selectedPermit.condiciones}</p>
+                </div>
+                <div className="bg-red-950/20 p-5 rounded border border-red-900/20">
+                  <h4 className="text-[10px] font-black text-red-500 uppercase tracking-widest mb-2 flex items-center gap-2">
+                    <FileText size={14} /> Documentación Requerida
+                  </h4>
+                  <p className="text-xs text-red-100/70 leading-relaxed font-medium">{selectedPermit.documentacion}</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="pt-6 border-t border-slate-800">
+               <h4 className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-3">Cómo solicitar</h4>
+               <p className="text-sm text-slate-300">{selectedPermit.solicitar}</p>
+            </div>
+
+            {/* FAQ (ESTILO ROJO) */}
+            <section className="space-y-4">
+              <h3 className="text-[10px] font-black text-white uppercase tracking-widest flex items-center gap-2">
+                <MessageSquare size={16} className="text-red-500"/> FAQ: Casos Frecuentes
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {selectedPermit.faq.map((item, idx) => (
+                  <div key={idx} className="bg-[#0d1526]/50 border border-slate-800 p-5 rounded hover:border-red-900/50 transition-colors">
+                    <p className="text-xs font-bold text-white mb-2 underline decoration-red-600 underline-offset-4">¿{item.q.replace('¿', '')}</p>
+                    <p className="text-[11px] text-slate-400 leading-relaxed">{item.a}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            <div className="pt-10">
+               <button 
+                onClick={() => { setView('dashboard'); window.scrollTo(0,0); }}
+                className="w-full py-4 text-[10px] font-black text-red-500 tracking-[0.4em] uppercase border border-slate-800 rounded hover:bg-red-600 hover:text-white transition-all shadow-lg hover:shadow-red-900/20"
+               >
+                 Volver al Dashboard Principal
+               </button>
+            </div>
+          </div>
+        </main>
+      )}
+
+      {/* FOOTER */}
+      <footer className="mt-20 py-10 border-t border-slate-900 text-center">
+        <div className="flex items-center justify-center gap-3 text-[10px] font-bold text-slate-600 uppercase tracking-[0.4em]">
+          <ShieldCheck size={14} className="text-red-600" /> Ayuntamiento de Villalbilla
+        </div>
+      </footer>
+    </div>
+  );
+};
+
+export default App;

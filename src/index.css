@@ -1,0 +1,183 @@
+@import "tailwindcss";
+
+@theme {
+    --color-brand-blue: #3b82f6;
+    --color-brand-blue-glow: rgba(59, 130, 246, 0.5);
+    --color-brand-red: #ef4444;
+    --color-brand-red-glow: rgba(239, 68, 68, 0.5);
+    --color-dark-deep: #020617;
+
+    /* Custom Shadows for Premium UI */
+    --shadow-glass: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
+    --shadow-glow-blue: 0 0 20px rgba(59, 130, 246, 0.15);
+    --shadow-glow-blue-hover: 0 0 40px rgba(59, 130, 246, 0.3);
+    --shadow-glow-red: 0 0 20px rgba(239, 68, 68, 0.15);
+    --shadow-glow-red-hover: 0 0 40px rgba(239, 68, 68, 0.3);
+}
+
+@layer base {
+    :root {
+        font-family: 'Outfit', 'Inter', system-ui, sans-serif;
+        color-scheme: dark;
+        background-color: var(--color-dark-deep);
+        color: white;
+    }
+
+    body {
+        background: radial-gradient(circle at top left, rgba(30, 41, 59, 0.5), transparent),
+            radial-gradient(circle at bottom right, rgba(15, 23, 42, 0.8), var(--color-dark-deep));
+        min-height: 100vh;
+    }
+}
+
+@layer components {
+
+    /* Mesh Gradients */
+    .mesh-gradient {
+        background-color: #020617;
+        background-image:
+            radial-gradient(at 0% 0%, hsla(222, 47%, 11%, 1) 0, transparent 50%),
+            radial-gradient(at 50% 0%, hsla(217, 91%, 60%, 0.05) 0, transparent 50%),
+            radial-gradient(at 100% 0%, hsla(222, 47%, 11%, 1) 0, transparent 50%);
+    }
+
+    .glass-card {
+        @apply bg-white/5 backdrop-blur-2xl border border-white/10 shadow-glass;
+    }
+
+    .glow-blue {
+        @apply shadow-glow-blue hover:shadow-glow-blue-hover;
+    }
+
+    .glow-red {
+        @apply shadow-glow-red hover:shadow-glow-red-hover;
+    }
+
+    .btn-premium {
+        @apply relative overflow-hidden transition-all duration-500 hover:scale-[1.02] active:scale-[0.98];
+    }
+
+    .btn-premium::before {
+        content: '';
+        @apply absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-r from-white/0 via-white/10 to-white/0 -skew-x-12 translate-x-[-100%] group-hover:translate-x-[100%];
+    }
+}
+
+/* Utilities */
+.text-gradient-blue {
+    background: linear-gradient(to bottom right, #60a5fa, #2563eb);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-red {
+    background: linear-gradient(to bottom right, #f87171, #dc2626);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+.animate-float {
+    animation: float 6s ease-in-out infinite;
+}
+
+@keyframes sound-wave-1 {
+
+    0%,
+    100% {
+        transform: scaleY(0.5);
+        opacity: 0.5;
+    }
+
+    50% {
+        transform: scaleY(1.4);
+        opacity: 1;
+    }
+}
+
+@keyframes sound-wave-2 {
+
+    0%,
+    100% {
+        transform: scaleY(1.2);
+        opacity: 1;
+    }
+
+    50% {
+        transform: scaleY(0.3);
+        opacity: 0.4;
+    }
+}
+
+@keyframes sound-wave-3 {
+
+    0%,
+    100% {
+        transform: scaleY(0.7);
+        opacity: 0.6;
+    }
+
+    50% {
+        transform: scaleY(1.6);
+        opacity: 1;
+    }
+}
+
+@keyframes ripple {
+    0% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+
+    100% {
+        transform: scale(2.5);
+        opacity: 0;
+    }
+}
+
+@keyframes smooth-pulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+    }
+
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 0 20px 5px rgba(255, 255, 255, 0.2);
+    }
+}
+
+.animate-sound-1 {
+    animation: sound-wave-1 0.8s ease-in-out infinite;
+    transform-origin: bottom;
+}
+
+.animate-sound-2 {
+    animation: sound-wave-2 0.7s ease-in-out infinite;
+    transform-origin: bottom;
+}
+
+.animate-sound-3 {
+    animation: sound-wave-3 0.9s ease-in-out infinite;
+    transform-origin: bottom;
+}
+
+.animate-sound-4 {
+    animation: sound-wave-2 0.6s ease-in-out infinite;
+    transform-origin: bottom;
+}
