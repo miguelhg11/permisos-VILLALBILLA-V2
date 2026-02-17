@@ -35,35 +35,79 @@ export default function AIAssistantOverlay({ onDismiss }) {
                             {/* Glow effect backend */}
                             <div className="absolute inset-0 bg-blue-500/20 blur-[100px] rounded-full animate-pulse" />
 
-                            {/* Imagen Base con animación de "hablar" */}
-                            <motion.img
-                                src="/funcionario.png"
-                                alt="Asistente IA"
-                                className="w-full h-full object-contain relative z-10 drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)]"
+                            {/* Imagen Base (Cuerpo y Cabeza estática) */}
+                            <motion.div
+                                className="w-full h-full relative z-10"
                                 animate={{
-                                    y: [0, -8, 0],
-                                    scale: [1, 1.02, 1],
+                                    y: [0, -5, 0],
                                 }}
                                 transition={{
-                                    duration: 4,
+                                    duration: 6,
                                     repeat: Infinity,
                                     ease: "easeInOut"
                                 }}
-                            />
+                            >
+                                {/* Fondo/Cuerpo */}
+                                <img
+                                    src="/funcionario.png"
+                                    alt="Asistente IA"
+                                    className="w-full h-full object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)]"
+                                />
 
-                            {/* Animación de Hablar (Micro-movimientos) */}
-                            <motion.div
-                                className="absolute inset-0 z-20 pointer-events-none"
-                                animate={{
-                                    scaleY: [1, 1.01, 1, 1.02, 1],
-                                }}
-                                transition={{
-                                    duration: 0.2,
-                                    repeat: Infinity,
-                                    repeatType: 'mirror',
-                                    ease: "linear"
-                                }}
-                            />
+                                {/* Cejas (Simulación mediante clip-path y movimiento) */}
+                                <motion.img
+                                    src="/funcionario.png"
+                                    className="absolute inset-0 w-full h-full object-contain z-20"
+                                    style={{ clipPath: 'inset(15% 30% 75% 30%)' }} // Área cejas
+                                    animate={{
+                                        y: [0, -3, 0, -2, 0],
+                                    }}
+                                    transition={{
+                                        duration: 4,
+                                        repeat: Infinity,
+                                        times: [0, 0.1, 0.2, 0.3, 1],
+                                        ease: "easeInOut"
+                                    }}
+                                />
+
+                                {/* Boca (Simulación de hablar) */}
+                                <motion.img
+                                    src="/funcionario.png"
+                                    className="absolute inset-0 w-full h-full object-contain z-20"
+                                    style={{ clipPath: 'inset(65% 35% 25% 35%)' }} // Área boca
+                                    animate={{
+                                        scaleY: [1, 1.1, 0.9, 1.2, 1],
+                                        y: [0, 1, 0, 1, 0],
+                                    }}
+                                    transition={{
+                                        duration: 0.15,
+                                        repeat: Infinity,
+                                        repeatType: 'mirror',
+                                        ease: "linear"
+                                    }}
+                                />
+                            </motion.div>
+
+                            {/* Partículas de "Procesamiento" */}
+                            <div className="absolute inset-0 z-30 pointer-events-none">
+                                {[...Array(6)].map((_, i) => (
+                                    <motion.div
+                                        key={i}
+                                        className="absolute w-1 h-1 bg-blue-400 rounded-full"
+                                        initial={{ opacity: 0, x: "50%", y: "50%" }}
+                                        animate={{
+                                            opacity: [0, 1, 0],
+                                            x: [`${40 + Math.random() * 20}%`, `${Math.random() * 100}%`],
+                                            y: [`${40 + Math.random() * 20}%`, `${Math.random() * 100}%`],
+                                        }}
+                                        transition={{
+                                            duration: 2 + Math.random() * 2,
+                                            repeat: Infinity,
+                                            delay: i * 0.4
+                                        }}
+                                    />
+                                ))}
+                            </div>
                         </div>
 
                         {/* Bocadillo de Texto (Speech Bubble) - Estilo Premium Apple-like */}

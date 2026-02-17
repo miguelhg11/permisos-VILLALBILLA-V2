@@ -7,6 +7,12 @@ class RAGEngine {
     // Shared state for key rotation across instances
     static keyIndex = 0;
     static apiKeys = (import.meta.env.VITE_GEMINI_API_KEYS || "").split(',').map(k => k.trim()).filter(k => k);
+    static stats = {
+        totalRequests: 0,
+        rotations: 0,
+        failures: 0,
+        keysUsage: (import.meta.env.VITE_GEMINI_API_KEYS || "").split(',').map(() => 0)
+    };
 
     constructor(role) {
         this.role = role.toUpperCase(); // 'FUNCIONARIO' | 'LABORAL'
@@ -14,6 +20,15 @@ class RAGEngine {
         this.modelName = import.meta.env.VITE_GEMINI_MODEL || "gemini-2.5-flash";
 
         this.initGenAI();
+    }
+
+    static getStatus() {
+        return {
+            currentIndex: RAGEngine.keyIndex,
+            totalKeys: RAGEngine.apiKeys.length,
+            stats: RAGEngine.stats,
+            model: import.meta.env.VITE_GEMINI_MODEL || "gemini-2.5-flash"
+        };
     }
 
     initGenAI() {
@@ -29,6 +44,7 @@ class RAGEngine {
     rotateKey() {
         if (RAGEngine.apiKeys.length > 1) {
             RAGEngine.keyIndex = (RAGEngine.keyIndex + 1) % RAGEngine.apiKeys.length;
+            RAGEngine.stats.rotations++;
             console.log(`[RAG] Rotated to API Key index ${RAGEngine.keyIndex}`);
             this.initGenAI();
             return true;
@@ -322,10 +338,15 @@ class RAGEngine {
         }
 
         console.error("[RAG] All API keys exhausted. Switching to Local Fallback.", lastError);
+        RAGEngine.stats.failures++;
         return this.getLocalFallbackResponse(contextItem);
     }
 
     async performGeminiCall(prompt, contextItem) {
+        // Increment stats
+        RAGEngine.stats.totalRequests++;
+        RAGEngine.stats.keysUsage[RAGEngine.keyIndex]++;
+
         const roleConfig = {
             'FUNCIONARIO': {
                 normativa: 'Acuerdo de Personal Funcionario',

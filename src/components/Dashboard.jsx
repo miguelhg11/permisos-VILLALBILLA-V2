@@ -1,11 +1,12 @@
 import React, { useState, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ArrowRight, ArrowLeft, Search, Clock, MessageSquare, X, DownloadCloud, AlertCircle, Loader2 } from 'lucide-react'
+import { ArrowRight, ArrowLeft, Search, Clock, MessageSquare, X, DownloadCloud, AlertCircle, Loader2, Shield } from 'lucide-react'
 import funcionariosData from '../data/funcionarios.json'
 import laboralesData from '../data/laborales.json'
 import VoiceSearch from './VoiceSearch'
 import RAGEngine from '../lib/ragEngine'
 import AIAssistantOverlay from './AIAssistantOverlay'
+import AdminDashboard from './AdminDashboard'
 
 export default function Dashboard({ role, onSelectPermit, onBack }) {
     const [search, setSearch] = useState('')
@@ -15,6 +16,7 @@ export default function Dashboard({ role, onSelectPermit, onBack }) {
     const [isIterating, setIsIterating] = useState(false)
     const [isSearching, setIsSearching] = useState(false)
     const [showAssistant, setShowAssistant] = useState(false)
+    const [showAdmin, setShowAdmin] = useState(false)
 
     const rag = useMemo(() => new RAGEngine(role.toUpperCase()), [role])
 
@@ -136,8 +138,13 @@ export default function Dashboard({ role, onSelectPermit, onBack }) {
                         >
                             <ArrowLeft size={20} className="text-white" />
                         </button>
-                        <div className="flex items-center gap-4">
-                            <img src={logoPath} alt="Logo" className="h-12 w-auto object-contain filter brightness-110" />
+                        <div className="flex items-center gap-4 relative">
+                            <img
+                                src={logoPath}
+                                alt="Logo"
+                                className="h-12 w-auto object-contain filter brightness-110 cursor-help"
+                                onClick={() => setShowAdmin(true)}
+                            />
                             <div className="hidden sm:block">
                                 <p className={`text-xs font-black ${styles.text} uppercase tracking-[0.3em]`}>
                                     {role === 'funcionario' ? 'Personal Funcionario' : 'Personal Laboral'}
@@ -348,6 +355,10 @@ export default function Dashboard({ role, onSelectPermit, onBack }) {
 
             {showAssistant && (
                 <AIAssistantOverlay onDismiss={() => setShowAssistant(false)} />
+            )}
+
+            {showAdmin && (
+                <AdminDashboard onClose={() => setShowAdmin(false)} />
             )}
         </div>
     )

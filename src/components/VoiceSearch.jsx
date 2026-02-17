@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import { Mic, MicOff, Loader2, AlertCircle } from 'lucide-react'
 
 export default function VoiceSearch({ onResult, accentColor }) {
@@ -27,6 +28,15 @@ export default function VoiceSearch({ onResult, accentColor }) {
         if (!SpeechRecognition) {
             setError('Tu navegador no soporta búsqueda por voz')
             return
+        }
+
+        // Importante forzar abort de sesiones previas (especialmente en Safari iOS)
+        if (recognitionRef.current) {
+            try {
+                recognitionRef.current.abort()
+            } catch (e) {
+                console.log('Abort error (ignored):', e)
+            }
         }
 
         try {
@@ -72,6 +82,7 @@ export default function VoiceSearch({ onResult, accentColor }) {
                 }
             }
 
+            // En iOS Safari, .start() DEBE llamarse síncronamente tras el click
             recognition.start()
         } catch (err) {
             console.error('Failed to start recognition:', err)
@@ -103,20 +114,34 @@ export default function VoiceSearch({ onResult, accentColor }) {
                 {/* Modern Ripple Effect */}
                 {isListening && (
                     <>
-                        <div className={`absolute inset-0 rounded-full bg-${accentColor}-500 animate-ripple`} style={{ animationDelay: '0s' }} />
-                        <div className={`absolute inset-0 rounded-full bg-${accentColor}-500 animate-ripple`} style={{ animationDelay: '0.6s' }} />
-                        <div className={`absolute inset-0 rounded-full bg-${accentColor}-500 animate-ripple`} style={{ animationDelay: '1.2s' }} />
+                        <div className={`absolute inset-0 rounded-full bg-${accentColor}-500/30 animate-ping`} style={{ animationDuration: '3s' }} />
+                        <div className={`absolute inset-0 rounded-full bg-${accentColor}-500/20 blur-xl animate-pulse`} />
                     </>
                 )}
 
                 <div className="relative z-20 flex items-center justify-center">
                     {isListening ? (
-                        <div className="flex items-center gap-[3px] h-5 px-1">
-                            <div className="w-[3px] h-3 bg-white rounded-full animate-sound-1" />
-                            <div className="w-[4px] h-5 bg-white rounded-full animate-sound-2" />
-                            <div className="w-[3px] h-4 bg-white rounded-full animate-sound-3" />
-                            <div className="w-[4px] h-3 bg-white rounded-full animate-sound-4" />
-                            <div className="w-[3px] h-4 bg-white rounded-full animate-sound-1" style={{ animationDelay: '0.2s' }} />
+                        <div className="flex items-center gap-[4px] h-6 px-2">
+                            <motion.div
+                                className="w-[3px] bg-white rounded-full"
+                                animate={{ height: [8, 24, 8] }}
+                                transition={{ duration: 0.5, repeat: Infinity, ease: "easeInOut" }}
+                            />
+                            <motion.div
+                                className="w-[4px] bg-white rounded-full"
+                                animate={{ height: [12, 32, 12] }}
+                                transition={{ duration: 0.5, repeat: Infinity, ease: "easeInOut", delay: 0.1 }}
+                            />
+                            <motion.div
+                                className="w-[3px] bg-white rounded-full"
+                                animate={{ height: [16, 28, 16] }}
+                                transition={{ duration: 0.5, repeat: Infinity, ease: "easeInOut", delay: 0.2 }}
+                            />
+                            <motion.div
+                                className="w-[4px] bg-white rounded-full"
+                                animate={{ height: [10, 24, 10] }}
+                                transition={{ duration: 0.5, repeat: Infinity, ease: "easeInOut", delay: 0.3 }}
+                            />
                         </div>
                     ) : error ? (
                         <AlertCircle size={22} className="opacity-80" />
